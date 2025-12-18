@@ -2,6 +2,8 @@
 
 A minimal project starter built with **Vue 3**, **Nuxt 4**, **Drizzle ORM**, **MySQL**, and **PrimeVue** — intended as a clean starting point for fullstack Nuxt apps with a typed DB layer and a polished UI component library.
 
+![alt text](docs/readme-image.png)
+
 ## ⭐ Highlights
 
 - **Framework:** Vue 3 + Nuxt 4 (Nitro)
