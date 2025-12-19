@@ -101,79 +101,92 @@
 </script>
 
 <template>
-  <div>
-    <h1>Users List</h1>
-    <context-menu ref="cm" :model="menuModel" @hide="selectedRow = null" />
-    <context-menu ref="cm2" :model="menuModel2" @hide="selectedRow = null" />
+  <context-menu ref="cm" :model="menuModel" @hide="selectedRow = null" />
+  <context-menu ref="cm2" :model="menuModel2" @hide="selectedRow = null" />
 
-    <data-table 
-      :value="users" 
-      contextMenu 
-      @row-contextmenu="onMenuRightClick"
-      v-model:context-menu-selection="selectedRow"
-      group-rows-by="name"
-      row-group-mode="subheader"
-      size="small"
-      :row-style="rowStyle"
-      v-model:expandedRows="expandedRows"
-      @rowExpand="onRowExpand" 
-      @rowCollapse="onRowCollapse"      
-      >
-      
-      <!-- #region Columns -->
-      <column expander style="width: 5rem" />
-      <column field="id" header="ID"></column>
-      <column field="name" header="Name"></column>
-      <column header="Name">
-        <template #body="slotProps">
-          {{ slotProps.data.name }}
-        </template>
-      </column>
-      <column field="email" header="Email">
-        <template #body="slotProps">
-          <div>{{ slotProps.data.email }}
-            <Button class="p-1 !text-xs" label="Add" severity="primary" @click="buttonClick(slotProps, $event)" icon="pi pi-plus" size="small" :badge="slotProps.data.id.toString()"></Button>
-          </div>
-        </template>
-      </column>
+  <div class="h-screen w-screen overflow-hidden">
+    <div class="flex h-full flex-col">
+      <!-- Header -->
+      <div class="shrink-0 border-b p-4 bg-blue-800 border-blue-900 text-white">
+        <h1 class="text-2xl">Users List</h1>
+      </div>
+      <!-- Table -->
+      <div class="flex-1 min-h-0">
+        <data-table 
+          :value="users" 
+          contextMenu 
+          @row-contextmenu="onMenuRightClick"
+          v-model:context-menu-selection="selectedRow"
+          group-rows-by="name"
+          row-group-mode="subheader"
+          size="small"
+          :row-style="rowStyle"
+          v-model:expandedRows="expandedRows"
+          @rowExpand="onRowExpand" 
+          @rowCollapse="onRowCollapse"
+          scrollable 
+          scrollHeight="flex"
+          scrollDirection="both"
+          class="h-full"
+          tableStyle="min-width: 1200px"      
+          >
+          
+          <!-- #region Columns -->
+          <column expander frozen class="w-12" />
+          <column field="name" header="Name"></column>          
+          <column header="Name" frozen class="w-24">
+            <template #body="slotProps">
+              {{ slotProps.data.name }}
+            </template>
+          </column>
+          <column field="id" header="ID"></column>          
+          <column field="email" header="Email">
+            <template #body="slotProps">
+              <div>{{ slotProps.data.email }}
+                <Button class="p-1 !text-xs" label="Add" severity="primary" @click="buttonClick(slotProps, $event)" icon="pi pi-plus" size="small" :badge="slotProps.data.id.toString()"></Button>
+              </div>
+            </template>
+          </column>
 
-      <column field="active" header="Active">
-        <template #body="slotProps">
-          <checkbox binary :true-value="1" :false-value="0" v-model="slotProps.data.active" @update:model-value="updateUserActiveStatus(slotProps.data.id, $event)"></checkbox>
-        </template>
-      </column>
-      <!-- #endregion Columns -->
+          <column field="active" header="Active">
+            <template #body="slotProps">
+              <checkbox binary :true-value="1" :false-value="0" v-model="slotProps.data.active" @update:model-value="updateUserActiveStatus(slotProps.data.id, $event)"></checkbox>
+            </template>
+          </column>
+          <!-- #endregion Columns -->
 
-      <!-- #region Table-Templates -->
-      <template #header>
-        <h2 class="p-m-0">Users</h2>
-      </template>
+          <!-- #region Table-Templates -->
+          <template #header>
+            <h2 class="p-m-0">Table Header</h2>
+          </template>
 
-      <template #groupheader="slotProps">
-        <div class="flex items-center gap-2 font-bold text-sm">
-            {{ slotProps.data.name }}
-        </div>
-      </template>
+          <template #groupheader="slotProps">
+            <div class="flex items-center gap-2 font-bold text-sm">
+                {{ slotProps.data.name }}
+            </div>
+          </template>
 
-      <template #groupfooter="slotProps">
-          <div class="flex font-bold text-sm">Total of {{ slotProps.data.name }}: {{ calculateNamesTotal(slotProps.data.name) }}</div>
-      </template>
+          <template #groupfooter="slotProps">
+              <div class="flex font-bold text-sm">Total of {{ slotProps.data.name }}: {{ calculateNamesTotal(slotProps.data.name) }}</div>
+          </template>
 
-      <template #footer>
-        <div class="font-bold text-sm">In total there are {{ users ? users.length : 0 }} users.</div>
-      </template>
-      
-      <template #expansion="slotProps">
-        <div class="p-3">
-          <h3>Details for {{ slotProps.data.name }}</h3>
-          <data-table :value="subRows">
-            <column field="id" header="ID"></column>
-            <column field="name" header="Name"></column>
-            <column field="info" header="Info"></column>
-          </data-table>
-        </div>
-      </template>      
-      <!-- #endregion Table-Templates -->
-    </data-table>
+          <template #footer>
+            <div class="font-bold text-sm">In total there are {{ users ? users.length : 0 }} users.</div>
+          </template>
+          
+          <template #expansion="slotProps">
+            <div class="p-3">
+              <h3>Details for {{ slotProps.data.name }}</h3>
+              <data-table :value="subRows">
+                <column field="id" header="ID"></column>
+                <column field="name" header="Name"></column>
+                <column field="info" header="Info"></column>
+              </data-table>
+            </div>
+          </template>      
+          <!-- #endregion Table-Templates -->
+        </data-table>
+      </div>
+    </div>
   </div>
 </template>
