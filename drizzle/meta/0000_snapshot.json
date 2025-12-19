@@ -1,0 +1,138 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "roles": {
+      "name": "roles",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "roles_id": {
+          "name": "roles_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "id": {
+          "name": "id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_role": {
+          "autoincrement": false,
+          "name": "id_role",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "age": {
+          "autoincrement": false,
+          "name": "age",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "Active",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "users_id": {
+          "name": "users_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "indexes": {
+        "idx_users_id_role": {
+          "name": "idx_users_id_role",
+          "columns": [
+            "id_role"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}

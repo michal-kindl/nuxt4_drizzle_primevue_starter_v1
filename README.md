@@ -86,6 +86,8 @@ This starter uses **Drizzle ORM** — follow Drizzle docs for generating and run
 
 - Define or update schemas in `drizzle/schema.ts` and `server/db/schema.ts`
 - Use the Drizzle CLI / drizzle-kit to create and apply migrations
+  - `npx drizzle-kit pull` for DB ➡ Schema 
+  - `npx drizzle-kit push` for Schema ➡ DB 
 
 ## 🧪 Testing & Linting
 

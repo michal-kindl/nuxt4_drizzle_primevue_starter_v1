@@ -1,12 +1,42 @@
 <script setup lang="ts">
   import type { Button } from 'primevue';
   
+  const toast = useToast();
+
   //#region Selection
   const selectedRow = ref();
   //#endregion
 
   //#region Data Fetching
-  const { data: users } = await useFetch('/api/users');
+  const { data: users, status, error, refresh, clear } = await useFetch('/api/users/all');
+  
+  console.log(users.value);
+
+  const updateUserActiveStatus = async (id: number, isActive: number) => {
+    try {
+      const { success } = await $fetch(`/api/users/${id}/set-active`, {
+        method: 'POST',
+        body: { active: isActive }
+      });
+
+      if (success) {
+        const msg = 'Uživatel byl úspěšně aktualizován.';
+        toast.add({ severity: 'success', summary: 'Úspěch', detail: msg, life: 3000 });
+        console.log(msg);
+
+        // Refresh data after update
+        await refresh();
+      }
+      else {
+        const msg = 'Aktualizace uživatele se nezdařila.';
+        toast.add({ severity: 'error', summary: 'Chyba', detail: msg, life: 3000 });
+        console.error(msg);
+      }
+
+    } catch (error) {
+      console.error('Error updating user active status:', error);
+    }
+  };
   //#endregion
 
   //#region Context Menu
@@ -104,6 +134,12 @@
           <div>{{ slotProps.data.email }}
             <Button class="p-1 !text-xs" label="Add" severity="primary" @click="buttonClick(slotProps, $event)" icon="pi pi-plus" size="small" :badge="slotProps.data.id.toString()"></Button>
           </div>
+        </template>
+      </column>
+
+      <column field="active" header="Active">
+        <template #body="slotProps">
+          <checkbox binary :true-value="1" :false-value="0" v-model="slotProps.data.active" @update:model-value="updateUserActiveStatus(slotProps.data.id, $event)"></checkbox>
         </template>
       </column>
       <!-- #endregion Columns -->
