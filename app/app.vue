@@ -1,5 +1,11 @@
 <script setup lang="ts">
+  import dotenv from 'dotenv';
   import type { Button } from 'primevue';
+
+  if (import.meta.server) {
+    dotenv.config({ path: ['.env', '.env.development', '../../.env', '../../.env.development'] });
+    console.log(process.env.JWT_ACCESS_SECRET);
+  }
   
   const toast = useToast();
 
