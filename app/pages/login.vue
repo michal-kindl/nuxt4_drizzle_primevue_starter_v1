@@ -15,27 +15,21 @@ async function handleLogin() {
   },
   {
     external: true,
-    redirect: true, // let nuxt-auth handle redirection
-    callbackUrl: '/' // redirect to home on success
-  })
-
-  console.log('Sign-in result:', signInResult);
-
-  // signIn already handles redirect/navigation for successful logins
-  if (!signInResult || signInResult?.error) {
-    error.value = 'Login failed'
-  }
-  // Don't manually navigate - nuxt-auth handles it
+    redirect: true,
+    callbackUrl: '/users'
+  });  
 }
 
 </script>
 
 <template>
   <div>
-    <h1>Login</h1>
-    <input v-model="username" placeholder="Username" />
-    <input v-model="password" type="password" placeholder="Password" />
-    <button @click="handleLogin">Login</button>
-    <p v-if="error">{{ error }}</p>
+    <form>
+      <h1>Login</h1>
+      <input v-model="username" placeholder="Username" />
+      <input v-model="password" type="password" placeholder="Password" />
+      <button @click="handleLogin">Login</button>
+      <p v-if="error">{{ error }}</p>
+    </form>
   </div>
 </template>

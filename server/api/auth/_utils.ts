@@ -3,14 +3,17 @@ import db from '../../db/client';
 import md5 from 'md5';
 
 export async function validateUser(username: string, password: string) {
-  const pwdHash = md5(password);
+  const pwdHash = md5(password || '').toLowerCase();
   console.log('Validating user:', username, 'with password hash:', pwdHash);
   
   const u = await db.query.users.findFirst({
-    where: (users, { eq, and }) => and(eq(users.name, username), eq(users.active, 1))
+    where: (users, { eq, and }) => and(
+      eq(users.name, username), 
+      eq(users.active, 1), 
+      eq(users.password, pwdHash))
   });
   
-  let user = u ? { ...u } as any: null;
+  let user = u ? { ...u } as any : null;
   if (user) {
     delete user.password; // remove password before returning user object
   }

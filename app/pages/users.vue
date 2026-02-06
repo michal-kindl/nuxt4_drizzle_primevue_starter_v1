@@ -16,8 +16,6 @@
   //#region Data Fetching
   const { data: users, status, error, refresh, clear } = await useFetch('/api/users/all');
   
-  console.log(users.value);
-
   const updateUserActiveStatus = async (id: number, isActive: number) => {
     try {
       const { success } = await $fetch(`/api/users/${id}/set-active`, {
@@ -81,7 +79,7 @@
 
   //#region Row Styling
   const rowStyle = (data: any) => {
-    console.log(data);
+    //console.log(data);
     return { backgroundColor: data.name == 'Michal' ? '#4d4d0044' : '#4c4c4c44' };
   };
   //#endregion

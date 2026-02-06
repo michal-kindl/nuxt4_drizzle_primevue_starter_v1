@@ -7,8 +7,7 @@ export const roles = mysqlTable("roles", {
 	description: text(),
 },
 (table) => [
-	primaryKey({ columns: [table.id], name: "roles_id"}),
-	unique("id").on(table.id),
+	primaryKey({ columns: [table.id], name: "pk_roles_id"}),
 ]);
 
 export const users = mysqlTable("users", {
