@@ -11,8 +11,9 @@ export async function validateUser(username: string, password: string) {
   });
   
   let user = u ? { ...u } as any: null;
-
-  delete user.password; // remove password before returning user object
+  if (user) {
+    delete user.password; // remove password before returning user object
+  }
 
   return { isValid: u?.password === pwdHash, user:  user };
 }

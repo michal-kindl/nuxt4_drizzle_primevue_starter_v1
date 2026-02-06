@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import Aura from '@primeuix/themes/aura';
+import { baseURL } from 'process';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -20,21 +21,22 @@ export default defineNuxtConfig({
     }
   },
   auth: {
+    baseURL: '/api/auth',
     isEnabled: true,
-    baseURL: '/api/auth',     // base for auth endpoints
     globalAppMiddleware: true, // register auth middleware globally
     provider: {
       type: 'local',
-
       endpoints: {
         signIn:  { path: '/login',  method: 'post' },
-        signOut: { path: '/logout', method: 'post' },
+        signOut: { path: '/logout', method: 'post' },        
         getSession: { path: '/session', method: 'get' },
-        refresh:  { path: '/refresh', method: 'post' }
+        refresh:  { path: '/refresh', method: 'post' },
+        signUp: false, // disable registration endpoint
       },
 
       pages: {
-        login: '/login'  // ← your custom login route
+        login: '/login',
+        default: '/'  
       },
 
       token: {
