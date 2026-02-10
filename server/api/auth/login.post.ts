@@ -2,11 +2,11 @@ import { validateUser } from './_utils'
 import { signAccessToken, signRefreshToken } from './_jwt'
 
 export default defineEventHandler(async (event) => {
-  const { username, password } = await readBody(event);
+  const { username, password, appid } = await readBody(event);
 
-  console.log('Login attempt:', { username, password });
+  console.log('Login attempt:', { username, password, appid });
 
-  const validationResult = await validateUser(username, password);
+  const validationResult = await validateUser(username, password, appid);
 
   console.log('Validation result:', validationResult);
 

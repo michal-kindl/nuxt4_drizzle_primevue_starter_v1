@@ -1,35 +1,16 @@
 <script setup lang="ts">
 definePageMeta({
-  auth: false  // no redirect on this page
+  auth: false,  // no redirect on this page
+  layout: 'simple-full'  // use the simpleFull layout for this page
 })
 
-const auth = useAuth()
-const username = ref('')
-const password = ref('')
-const error = ref('')
-
-async function handleLogin() {
-  const signInResult = await auth.signIn({
-    username: username.value,
-    password: password.value
-  },
-  {
-    external: true,
-    redirect: true,
-    callbackUrl: '/users'
-  });  
-}
+const appId = 1; 
+const defaultPage = '/users';
 
 </script>
 
 <template>
-  <div>
-    <form>
-      <h1>Login</h1>
-      <input v-model="username" placeholder="Username" />
-      <input v-model="password" type="password" placeholder="Password" />
-      <button @click="handleLogin">Login</button>
-      <p v-if="error">{{ error }}</p>
-    </form>
+  <div class="h-screen overflow-hidden flex flex-col items-center justify-center">
+    <LoginFields :appId="appId" :defaultPage="defaultPage" />
   </div>
 </template>
